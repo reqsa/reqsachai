@@ -6,51 +6,108 @@
   <title>Reqsa Chai - Ana Sayfa</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <!-- Firebase config (firebase-config.js) -->
+  <script src="firebase-config.js" defer></script>
+
+  <style>
+    /* Navbar dropdown ek CSS */
+    .user-menu a {
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 5px 10px;
+    }
+
+    .user-menu a:hover {
+      color: #ccc;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: #1a1a1a;
+      padding: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1);
+      list-style: none;
+      min-width: 140px;
+      z-index: 100;
+    }
+
+    .dropdown-menu li a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      padding: 8px 20px;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: #333;
+      border-radius: 6px;
+    }
+
+    .user-menu {
+      position: relative;
+    }
+  </style>
 </head>
 <body>
   <header class="navbar">
-    <div class="logo">Reqsa Chai</div>
+    <div class="logo">R.C.</div>
     <nav>
-      <ul>
+      <ul id="nav-links">
         <li><a href="#hero">Ana Sayfa</a></li>
         <li><a href="iletisim.html">İletişim</a></li>
+        <!-- Buraya JS ile dinamik olarak kullanıcı adı veya giriş/kayıt linkleri eklenecek -->
       </ul>
     </nav>
   </header>
 
-  <section id="hero" class="hero">
-    <div class="hero-text">
-      <h1>Reqsa Chai.</h1>
-      <p>Vanguard Korumalı Script Eklentisi</p>
-    </div>
-  </section>
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-text">
+        <h1>Reqsa Chai.</h1>
+        <p>Vanguard Korumalı Script Eklentisi</p>
+      </div>
+    </section>
 
-  <section id="urunler" class="product-list">
-    <div class="product-card">
-      <h2>24 Saat lisans</h2>
-      <p class="description">Vanguard Bypass</p>
-      <p class="description">Teknik Destek</p>
-      <p class="description">Null-Base PROTECT Koruması</p>
-      <p class="price">₺102,50</p>
-      <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
-    </div>
-    <div class="product-card">
-      <h2>72 Saat lisans</h2>
-      <p class="description">Vanguard Bypass</p>
-      <p class="description">Teknik Destek</p>
-      <p class="description">Null-Base PROTECT Koruması</p>
-      <p class="price">₺256,50</p>
-      <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
-    </div>
-    <div class="product-card">
-      <h2>168 Saat lisans</h2>
-      <p class="description">Vanguard Bypass</p>
-      <p class="description">Teknik Destek</p>
-      <p class="description">Null-Base PROTECT Koruması</p>
-      <p class="price">₺459,50</p>
-      <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
-    </div>
-  </section>
+    <section id="urunler" class="product-list">
+      <div class="product-card">
+        <h2>24 Saat lisans</h2>
+        <p class="description">Vanguard Bypass</p>
+        <p class="description">Teknik Destek</p>
+        <p class="description">Null-Base PROTECT Koruması</p>
+        <p class="price">₺102,50</p>
+        <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
+      </div>
+      <div class="product-card">
+        <h2>72 Saat lisans</h2>
+        <p class="description">Vanguard Bypass</p>
+        <p class="description">Teknik Destek</p>
+        <p class="description">Null-Base PROTECT Koruması</p>
+        <p class="price">₺256,50</p>
+        <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
+      </div>
+      <div class="product-card">
+        <h2>168 Saat lisans</h2>
+        <p class="description">Vanguard Bypass</p>
+        <p class="description">Teknik Destek</p>
+        <p class="description">Null-Base PROTECT Koruması</p>
+        <p class="price">₺459,50</p>
+        <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>© 2025 Reqsa Chai. Tüm hakları saklıdır.</p>
@@ -60,6 +117,71 @@
     function openDiscord() {
       window.open('https://discord.gg/dqEWSpndBW', '_blank');
     }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.getElementById('nav-links');
+
+      auth.onAuthStateChanged(user => {
+        // Mevcut kullanıcı ile ilgili linkleri temizle
+        while (navLinks.children.length > 2) {
+          navLinks.removeChild(navLinks.lastChild);
+        }
+
+        if (user) {
+          // Kullanıcı giriş yapmış
+          const username = user.email.split('@')[0];
+
+          const userLi = document.createElement('li');
+          userLi.classList.add('user-menu');
+
+          userLi.innerHTML = `
+            <a href="#" id="user-name">${username} ▼</a>
+            <ul id="user-dropdown" class="dropdown-menu">
+              <li><a href="hesap.html">Hesap Detayları</a></li>
+              <li><a href="#" id="logout-btn">Çıkış Yap</a></li>
+            </ul>
+          `;
+
+          navLinks.appendChild(userLi);
+
+          const userNameLink = document.getElementById('user-name');
+          const dropdown = document.getElementById('user-dropdown');
+
+          userNameLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+          });
+
+          document.addEventListener('click', (e) => {
+            if (!userLi.contains(e.target)) {
+              dropdown.style.display = 'none';
+            }
+          });
+
+          document.getElementById('logout-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+              await auth.signOut();
+              alert('Başarıyla çıkış yapıldı.');
+              window.location.reload();
+            } catch (err) {
+              alert('Çıkış yaparken hata oluştu: ' + err.message);
+            }
+          });
+        } else {
+          // Giriş yapılmamış, login/register linkleri ekle
+          const loginLi = document.createElement('li');
+          loginLi.innerHTML = `<a href="login.html">Giriş Yap</a>`;
+          const registerLi = document.createElement('li');
+          registerLi.innerHTML = `<a href="register.html">Kayıt Ol</a>`;
+
+          navLinks.appendChild(loginLi);
+          navLinks.appendChild(registerLi);
+        }
+      });
+    });
   </script>
 </body>
 </html>

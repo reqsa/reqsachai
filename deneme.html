@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ödeme Sayfası</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h2>Stripe ile Ödeme</h2>
+  <form id="payment-form">
+    <div id="card-element"></div>
+    <button type="submit">Ödemeyi Yap</button>
+    <div id="card-errors" role="alert"></div>
+  </form>
+
+  <script>
+    const stripe = Stripe("pktest..."); // Stripe yayın anahtarınız
+    const elements = stripe.elements();
+    const card = elements.create("card");
+    card.mount("#card-element");
+
+    const form = document.getElementById("payment-form");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const {error, paymentMethod} = await stripe.createPaymentMethod({
+        type: 'card',
+        card: card,
+      });
+
+      if (error) {
+        document.getElementById("card-errors").textContent = error.message;
+      } else {
+        // Sunucuya paymentMethod.id gönderilir
+        alert("Ödeme yöntemi başarıyla oluşturuldu: " + paymentMethod.id);
+      }
+    });
+  </script>
+</body>
+</html>
