@@ -64,6 +64,7 @@
     <nav>
       <ul id="nav-links">
         <li><a href="#hero">Ana Sayfa</a></li>
+        <!-- Login ve Register kaldırıldı -->
       </ul>
     </nav>
   </header>
@@ -102,14 +103,13 @@
         <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
       </div>
     </section>
-<section id="video" class="video-section">
-  <h2>Tanıtım Videosu</h2>
-  <video id="tanitimVideo" controls width="600" style="max-width: 100%;">
-    <source src="videos/tanitim.mp4" type="video/mp4" />
-    Tarayıcınız video etiketini desteklemiyor.
-  </video>
-</section>
-
+    <section id="video" class="video-section">
+      <h2>Tanıtım Videosu</h2>
+      <video id="tanitimVideo" controls width="600" style="max-width: 100%;">
+        <source src="videos/tanitim.mp4" type="video/mp4" />
+        Tarayıcınız video etiketini desteklemiyor.
+      </video>
+    </section>
   </main> 
 
   <footer class="footer">
@@ -143,67 +143,10 @@
       window.open('https://discord.gg/dqEWSpndBW', '_blank');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const navLinks = document.getElementById('nav-links');
+    // auth kısmı ve login/register ile ilgili tüm kod kaldırıldı
 
-      auth.onAuthStateChanged(user => {
-        while (navLinks.children.length > 1) {
-          navLinks.removeChild(navLinks.lastChild);
-        }
-
-        if (user) {
-          const username = user.email.split('@')[0];
-
-          const userLi = document.createElement('li');
-          userLi.classList.add('user-menu');
-
-          userLi.innerHTML = `
-            <a href="#" id="user-name">${username} ▼</a>
-            <ul id="user-dropdown" class="dropdown-menu">
-              <li><a href="hesap.html">Hesap Detayları</a></li>
-              <li><a href="#" id="logout-btn">Çıkış Yap</a></li>
-            </ul>
-          `;
-
-          navLinks.appendChild(userLi);
-
-          const userNameLink = document.getElementById('user-name');
-          const dropdown = document.getElementById('user-dropdown');
-
-          userNameLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-          });
-
-          document.addEventListener('click', (e) => {
-            if (!userLi.contains(e.target)) {
-              dropdown.style.display = 'none';
-            }
-          });
-
-          document.getElementById('logout-btn').addEventListener('click', async (e) => {
-            e.preventDefault();
-            try {
-              await auth.signOut();
-              alert('Başarıyla çıkış yapıldı.');
-              window.location.reload();
-            } catch (err) {
-              alert('Çıkış yaparken hata oluştu: ' + err.message);
-            }
-          });
-        } else {
-          const loginLi = document.createElement('li');
-          loginLi.innerHTML = `<a href="login.html">Giriş Yap</a>`;
-          const registerLi = document.createElement('li');
-          registerLi.innerHTML = `<a href="register.html">Kayıt Ol</a>`;
-
-          navLinks.appendChild(loginLi);
-          navLinks.appendChild(registerLi);
-        }
-      });
-    });
     const video = document.getElementById('tanitimVideo');
-video.volume = 0.01 ;
+    video.volume = 0.01 ;
   </script>
 </body>
 </html>
