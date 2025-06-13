@@ -29,10 +29,13 @@ body {
 }
 
 .logo {
-  font-weight: 700;
   font-size: 24px;
-  color: #fff;  /* Siyah logo */
-  user-select: none;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+.logo:hover {
+  opacity: 0.8;
 }
 
 nav ul {
