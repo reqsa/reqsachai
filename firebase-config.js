@@ -2,7 +2,7 @@
 
 // Firebase CDN ile bağlantı kurulduktan sonra:
 const firebaseConfig = {
-  apiKey: "AIzaSyAsbrLS30RV23Zv-RmPTYhIg-nb6LZ9Cuk",
+  apiKey: "",
   authDomain: "reqsa-chai-ffb4e.firebaseapp.com",
   projectId: "reqsa-chai-ffb4e",
   storageBucket: "reqsa-chai-ffb4e.appspot.com",
