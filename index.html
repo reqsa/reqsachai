@@ -6,75 +6,34 @@
   <title>Reqsa Chai - Ana Sayfa</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js" defer></script>
-
   <style>
-    .user-menu a {
-      cursor: pointer;
-      color: #fff;
-      font-weight: 600;
-      font-size: 16px;
-      text-decoration: none;
-      padding: 5px 10px;
+    /* Scroll animasyon için fade-in */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
 
-    .user-menu a:hover {
-      color: #ccc;
-    }
-
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background: #1a1a1a;
-      padding: 10px 0;
-      border-radius: 8px;
-      box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1);
-      list-style: none;
-      min-width: 140px;
-      z-index: 100;
-    }
-
-    .dropdown-menu li a {
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      padding: 8px 20px;
-      white-space: nowrap;
-    }
-
-    .dropdown-menu li a:hover {
-      background-color: #333;
-      border-radius: 6px;
-    }
-
-    .user-menu {
-      position: relative;
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
-<header class="navbar">
-  <a href="#hero" class="logo">req</a>
-  <nav>
-    <ul id="nav-links">
-      <!-- Ana Sayfa menüden kaldırıldı -->
-    </ul>
-  </nav>
-</header>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo"><a href="#hero" class="logo-link">req</a></div>
+  </header>
 
   <main>
-    <section id="Ana Sayfa" class="hero">
+    <section id="hero" class="hero fade-in">
       <div class="hero-text">
         <h1>Reqsa Chai.</h1>
         <p>Vanguard Korumalı Script Eklentisi</p>
       </div>
     </section>
 
-    <section id="urunler" class="product-list">
+    <section id="urunler" class="product-list fade-in">
       <div class="product-card">
         <h2>24 Saat lisans</h2>
         <p class="description">Vanguard Bypass</p>
@@ -100,41 +59,36 @@
         <button class="buy-btn" onclick="openDiscord()">Satın Al</button>
       </div>
     </section>
-    <section id="video" class="video-section">
-  <h2>Tanıtım Videosu</h2>
-  <iframe 
-  id="tanitimVideo"
-  width="600" 
-  height="340" 
-  src="https://www.youtube.com/embed/7DuxDl-RYRU" 
-  title="YouTube video player" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen
-  style="max-width: 100%;"
-></iframe>
-</section>
+
+    <section id="video" class="video-section fade-in">
+      <h2>Tanıtım Videosu</h2>
+      <iframe 
+        width="600" 
+        height="340" 
+        src="https://www.youtube.com/embed/7DuxDl-RYRU" 
+        title="YouTube video player" 
+        frameborder="1" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+        style="max-width: 100%;"
+      ></iframe>
+    </section>
   </main> 
 
-  <footer class="footer">
+  <footer class="footer fade-in">
     <div class="footer-container">
       <div class="footer-section">
         <h4>İletişim</h4>
-        <a href="https://discord.gg/dqEWSpndBW">Discord</a>
-        <br>
-        <a>Whatsapp:  "Çok Yakında"</a>
-        <br>
-        <a>Email: reqsachai@gmail.com</a>
+        <a href="https://discord.gg/dqEWSpndBW">Discord</a><br />
+        <a>reqsachai@gmail.com</a>
       </div>
       <div class="footer-section">
         <h4>Sosyal Medya</h4>
         <a href="https://www.instagram.com/gorkem.dgn0/">Instagram</a><br />
-        <a>X</a>
       </div>
       <div class="footer-section">
         <h4>Yasal</h4>
-        <a>Gizlilik Politikası</a><br />
-        <a>Kullanım Şartları</a>
+        <a href="kullanim-sartlari.html">Kullanım Şartları</a><br />
       </div>
     </div>
     <div class="footer-copy">
@@ -143,14 +97,44 @@
   </footer>
 
   <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetID = this.getAttribute('href').substring(1);
+        const target = document.getElementById(targetID);
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Scroll animasyonu için IntersectionObserver
+    const faders = document.querySelectorAll('.fade-in');
+
+    const appearOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('show');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
     function openDiscord() {
       window.open('https://discord.gg/dqEWSpndBW', '_blank');
     }
-
-    // auth kısmı ve login/register ile ilgili tüm kod kaldırıldı
-
-    const video = document.getElementById('tanitimVideo');
-    video.volume = 0.01 ;
   </script>
 </body>
 </html>

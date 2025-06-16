@@ -25,7 +25,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 200;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 
 .logo {
@@ -36,6 +35,9 @@ body {
 }
 .logo:hover {
   opacity: 0.8;
+}
+.logo-link {
+  text-decoration: none;
 }
 
 nav ul {
@@ -321,4 +323,114 @@ footer {
   border-top: 1px solid #333;
   padding-top: 15px;
 }
+/* Scroll ile görünme animasyonu */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ===== Kullanım Şartları Sayfası Stil ===== */
+
+main.kullanim-sartlari {
+  max-width: 900px;
+  margin: 120px auto 80px;
+  padding: 20px;
+  color: #ccc;
+  font-family: 'Poppins', sans-serif;
+}
+
+main.kullanim-sartlari h1.fade-in {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+main.kullanim-sartlari p.fade-in.description {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+main.kullanim-sartlari ul.fade-in {
+  margin-top: 20px;
+  line-height: 1.8;
+  color: #ccc;
+}
+
+main.kullanim-sartlari p.fade-in:last-of-type {
+  margin-top: 40px;
+  color: #999;
+}
+
+/* Scroll animasyonu için fade-in sınıfı */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Navbar logo link stili (var olanı etkilememesi için daha spesifik) */
+.navbar .logo a {
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* Footer */
+.footer {
+  background-color: #121212;
+  color: #999;
+  padding: 30px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-section {
+  min-width: 150px;
+}
+
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.footer-section a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #739BD0;
+}
+
+.footer-copy {
+  text-align: center;
+  margin-top: 30px;
+  color: #666;
+  font-size: 13px;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+
 
