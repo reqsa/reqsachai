@@ -433,5 +433,16 @@ main.kullanim-sartlari p.fade-in:last-of-type {
   border-top: 1px solid #333;
   padding-top: 15px;
 }
+.tierlist-link {
+ font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
 
-
+.tierlist-link:hover {
+  opacity: 0.8;
+}

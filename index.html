@@ -23,6 +23,7 @@
 <body>
   <header class="navbar">
     <div class="logo"><a href="#hero" class="logo-link">req</a></div>
+    <a href="en-iyi-karakterler.html" class="tierlist-link">Tierlist</a>
   </header>
 
   <main>
@@ -62,12 +63,12 @@
 
     <section id="video" class="video-section fade-in">
       <h2>Tanıtım Videosu</h2>
-      <iframe 
+      <iframe
         width="600" 
         height="340" 
         src="https://www.youtube.com/embed/7DuxDl-RYRU" 
         title="YouTube video player" 
-        frameborder="1" 
+        frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen
         style="max-width: 100%;"
@@ -120,11 +121,13 @@
       rootMargin: "0px 0px -50px 0px"
     };
 
-    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    const appearOnScroll = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('show');
-        appearOnScroll.unobserve(entry.target);
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
       });
     }, appearOptions);
 
